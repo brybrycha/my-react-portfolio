@@ -6,14 +6,24 @@ html, body {
   max-width: 100%;
 }
 
+/* Animated Background */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #f4f7fc;
+  background: linear-gradient(-45deg, #1e3c72, #2a5298, #6a11cb, #2575fc);
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
   display: flex;
   justify-content: center;
   color: #333;
   width: 100%;
+}
+
+/* Gradient Animation */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* Main Container */
@@ -42,8 +52,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 350px; /* Fixed width */
-  height: 483px; /* Fixed height */
+  width: 350px; 
+  height: 483px;
   flex-shrink: 0;
   margin-top: 30px;
   margin-right: 40px;
@@ -88,16 +98,16 @@ body {
 
 /* Back Side */
 .profile-back {
-  background: Yellow;
+  background: yellow;
   color: #0073b1;
   font-weight: bold;
-  font-size: 18px; /* Increase font size */
+  font-size: 18px;
   transform: rotateY(180deg);
   text-decoration: none;
 }
 
 .profile-back a:hover {
-  text-decoration: underline; /* Add underline on hover */
+  text-decoration: underline;
 }
 
 /* Profile Image */
@@ -108,9 +118,8 @@ body {
   object-fit: cover;
   border: 4px solid white;
   margin-top: 30px;
-  margin-bottom:-20px;
+  margin-bottom: -20px;
 }
-
 
 .profile-name {
   font-size: 22px;
@@ -150,15 +159,16 @@ body {
   font-size: 32px;
   font-weight: bold;
   text-align: left;
-  color: #333;
+  color: white;
 }
 
 .divider {
   width: 100%;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   margin: 20px 0;
 }
 
+/* Projects Scrolling */
 .projects-container {
   overflow-x: auto;
   white-space: nowrap;
@@ -176,7 +186,7 @@ body {
 }
 
 .projects-container::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 10px;
 }
 
@@ -185,12 +195,12 @@ body {
   margin-left: 8px;
   cursor: pointer;
   font-size: 16px;
-  color: #0073b1; /* LinkedIn blue */
+  color: #0073b1;
   transition: color 0.2s ease-in-out;
 }
 
 .copy-icon:hover {
-  color: #005582; /* Darker blue on hover */
+  color: #005582;
 }
 
 .copied-msg {
@@ -204,68 +214,134 @@ body {
   display: flex;
   gap: 20px;
 }
+
 .info-icon {
-  font-size: 20px; /* Adjust icon size */
+  font-size: 20px;
   margin-right: 8px;
   vertical-align: middle;
 }
 
 .email-icon {
-  color: #D44638; /* Gmail Red */
+  color: #D44638;
 }
 
 .phone-icon {
-  color: #34B7F1; /* Phone Blue */
+  color: #34B7F1;
 }
 
 .linkedin-icon {
-  color: #0073b1; /* LinkedIn Blue */
+  color: #0073b1;
 }
 
-/* Project Cards */
+/* Adjusted Project Card Size */
 .project-card {
   display: inline-block;
-  width: 270px;
-  background: white;
-  padding: 20px;
+  width: 250px;
+  height: 337px;
+  background: rgba(255, 255, 255, 0.15); /* Initial transparency */
+  backdrop-filter: blur(20px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 15px;
   border-radius: 15px;
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
   text-align: center;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s, background 0.3s ease-in-out;
   flex-shrink: 0;
-  position: relative;
-  transform-origin: center bottom;
   cursor: pointer;
-  margin-left: 10px;
-}
-
-.project-card:hover {
-  transform: scale(1.08);
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-.project-image-wrapper {
-  border-radius: 10px;
   overflow: hidden;
+  position: relative;
+}
+
+/* Ensure image fits well */
+.project-image-wrapper {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 10px;
 }
 
 .project-img {
   width: 100%;
-  height: 230px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 10px;
 }
 
+/* Hover Effect: Reduce Transparency */
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  position: relative;
+  background: rgba(255, 255, 255, 0.3); /* Less transparent on hover */
+}
+
+/* Title & Artist Text */
 .project-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   margin-top: 10px;
+  color: white;
 }
 
 .project-artist {
   font-size: 14px;
-  color: gray;
+  color: lightgray;
 }
+
+/* Stylish Horizontal Scrollbar */
+.projects-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  display: flex;
+  padding-bottom: 20px;
+  scrollbar-width: thin;
+  padding-top: 30px;
+  padding-left: 30px;
+  padding-right: 100px;
+  max-width: 100%;
+}
+
+/* Custom Scrollbar for WebKit Browsers */
+.projects-container::-webkit-scrollbar {
+  height: 8px; /* Make the scrollbar visible */
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.projects-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ff7eb3, #ff758c);
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+.projects-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ff477e, #ff3b6e);
+}
+
+/* Prevent hover scaling from causing cut-off */
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  position: relative;
+}
+
+.project-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+  color: white;
+}
+
+.project-artist {
+  font-size: 14px;
+  color: lightgray;
+}
+
 
 /* Responsive Design */
 @media (max-width: 1024px) {
@@ -282,7 +358,6 @@ body {
 
   .projects-content {
     max-width: 100%;
-    margin-left: 0;
   }
 
   .projects-container {
