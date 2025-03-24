@@ -16,13 +16,14 @@ body {
   width: 100%;
 }
 
+/* Main Container */
 .container {
   width: 95%;
   max-width: 1400px;
   text-align: center;
   padding: 40px;
   position: relative;
-  overflow-x: hidden; /* Ensures no horizontal scroll */
+  overflow-x: hidden;
 }
 
 /* Layout */
@@ -35,51 +36,106 @@ body {
 }
 
 /* Profile Section */
-.profile-section {
+.profile-container {
+  perspective: 1200px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px; /* Fixed width */
+  height: 483px; /* Fixed height */
+  flex-shrink: 0;
+  margin-top: 30px;
+  margin-right: 40px;
+}
+
+.profile-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease-in-out;
+  transform-origin: center center;
+}
+
+.profile-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.profile-front, .profile-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  padding: 30px;
+  justify-content: center;
   border-radius: 20px;
-  font-weight: bold;
-  width: 350px;
-  text-align: center;
-  position: sticky;
-  top: 50px;
-  flex-shrink: 0;
-  color: white;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  padding: 30px;
+  box-sizing: border-box;
 }
 
+/* Front Side */
+.profile-front {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+}
+
+/* Back Side */
+.profile-back {
+  background: Yellow;
+  color: #0073b1;
+  font-weight: bold;
+  font-size: 18px; /* Increase font size */
+  transform: rotateY(180deg);
+  text-decoration: none;
+}
+
+.profile-back a:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
+/* Profile Image */
 .profile-pic {
-  width: 180px;
-  height: 180px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
   object-fit: cover;
-  border: 5px solid white;
-  margin-bottom: 15px;
+  border: 4px solid white;
+  margin-top: 30px;
+  margin-bottom:-20px;
 }
 
+
 .profile-name {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 600;
 }
 
 .bio {
-  font-size: 16px;
+  font-size: 14px;
   text-align: center;
   padding: 10px;
 }
 
 .contact-info p {
   margin: 5px 0;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .contact-info a {
   color: #ffeb3b;
   text-decoration: none;
+  font-weight: bold;
+}
+
+.happy-text {
+  font-size: 22px;
   font-weight: bold;
 }
 
@@ -91,7 +147,7 @@ body {
 }
 
 .title {
-  font-size: 36px;
+  font-size: 32px;
   font-weight: bold;
   text-align: left;
   color: #333;
@@ -112,7 +168,7 @@ body {
   padding-top: 30px;
   padding-left: 30px;
   padding-right: 100px;
-  max-width: 100%; /* Prevents overflow */
+  max-width: 100%;
 }
 
 .projects-container::-webkit-scrollbar {
@@ -124,9 +180,46 @@ body {
   border-radius: 10px;
 }
 
+/* Copy Icon */
+.copy-icon {
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #0073b1; /* LinkedIn blue */
+  transition: color 0.2s ease-in-out;
+}
+
+.copy-icon:hover {
+  color: #005582; /* Darker blue on hover */
+}
+
+.copied-msg {
+  font-size: 14px;
+  color: green;
+  margin-left: 8px;
+  font-weight: bold;
+}
+
 .scroll-wrapper {
   display: flex;
   gap: 20px;
+}
+.info-icon {
+  font-size: 20px; /* Adjust icon size */
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.email-icon {
+  color: #D44638; /* Gmail Red */
+}
+
+.phone-icon {
+  color: #34B7F1; /* Phone Blue */
+}
+
+.linkedin-icon {
+  color: #0073b1; /* LinkedIn Blue */
 }
 
 /* Project Cards */
@@ -164,7 +257,7 @@ body {
 }
 
 .project-title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   margin-top: 10px;
 }
@@ -174,12 +267,6 @@ body {
   color: gray;
 }
 
-.external-icon {
-  font-size: 16px;
-  margin-left: 5px;
-  color: #6a11cb;
-}
-
 /* Responsive Design */
 @media (max-width: 1024px) {
   .layout {
@@ -187,11 +274,10 @@ body {
     align-items: center;
   }
 
-  .profile-section {
+  .profile-container {
     width: 100%;
-    position: relative;
-    top: unset;
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
   }
 
   .projects-content {
