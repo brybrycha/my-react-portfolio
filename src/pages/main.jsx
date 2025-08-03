@@ -17,10 +17,10 @@ const projects = [
     link: "https://brybrycha.github.io/Accident_Rate_Day_Night/"
   },
   {
-    title: "Phone Purchase Analysis",
+    title: "Netflix ELT Project ",
     artist: "Bryan Cha",
-    image: process.env.PUBLIC_URL + "/phone.jpg",
-    link: "/pages/phone-purchase-analysis"
+    image: process.env.PUBLIC_URL + "/Netflix.png",
+    link: "https://github.com/brybrycha/Netflix-Data-ETL-Project"
   },
   {
     title: "Playlist Visualization",
