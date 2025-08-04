@@ -65,25 +65,47 @@ const Portfolio = () => {
     }
   };
 
+  const debounce = (func, delay) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+  };
+
   const handleScroll = () => {
-    if (scrollRef.current) {
-      const scrollLeft = scrollRef.current.scrollLeft;
-      const cardWidth = scrollRef.current.children[0]?.children[0]?.offsetWidth + 20; // Card width + gap
-      if (cardWidth > 20) {
-        const newActiveDot = Math.round(scrollLeft / cardWidth);
-        setActiveDot(newActiveDot);
-      }
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
+    
+    // Check if scrolled to the end (with a small tolerance)
+    if (scrollLeft + clientWidth >= scrollWidth - 5) {
+      setActiveDot(projects.length - 1);
+      return;
+    }
+    
+    const firstCard = scrollContainer.querySelector('.project-card');
+    if (!firstCard) return;
+    
+    const gap = parseFloat(getComputedStyle(firstCard.parentElement).gap);
+    const scrollStep = firstCard.offsetWidth + gap;
+
+    if (scrollStep > 0) {
+      const newActiveDot = Math.round(scrollLeft / scrollStep);
+      setActiveDot(newActiveDot);
     }
   };
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
+    const debouncedScrollHandler = debounce(handleScroll, 50);
     if (scrollContainer) {
-      scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
+      scrollContainer.addEventListener("scroll", debouncedScrollHandler, { passive: true });
     }
     return () => {
       if (scrollContainer) {
-        scrollContainer.removeEventListener("scroll", handleScroll);
+        scrollContainer.removeEventListener("scroll", debouncedScrollHandler);
       }
     };
   }, []);
@@ -93,64 +115,43 @@ const Portfolio = () => {
       <div className="layout">
         <div className="profile-container">
           <div className={`profile-card ${isFlipped ? "flipped" : ""}`} onClick={handleFlip}>
-            {/* Front of Profile Card */}
             <div className="profile-front">
-              <img
-                src={process.env.PUBLIC_URL + "/face.jpg"}
-                alt="Bryan Cha"
-                className="profile-pic"
-              />
+              <img src={process.env.PUBLIC_URL + "/face.jpg"} alt="Bryan Cha" className="profile-pic" />
               <h2 className="profile-name">Bryan Cha</h2>
-              <p className="bio">
-                I'm a Business Economics and Data Science enthusiast passionate
-                about turning raw data into insights that drive smarter decisions.
-              </p>
+              <p className="bio">I'm a Business Economics and Data Science enthusiast passionate about turning raw data into insights that drive smarter decisions.</p>
               <p className="flip-prompt"><strong>CLICK TO SEE MY INFO</strong></p>
             </div>
-
-            {/* Back of Profile Card */}
             <div className="profile-back">
               <div className="info-section">
                 <p className="info-item">
                   <FaEnvelope className="info-icon" />
                   bryancha0329@gmail.com
-                  <FaRegClipboard
-                    className="copy-icon"
-                    onClick={(e) => { e.stopPropagation(); handleCopy("bryancha0329@gmail.com"); }}
-                  />
+                  <FaRegClipboard className="copy-icon" onClick={(e) => { e.stopPropagation(); handleCopy("bryancha0329@gmail.com"); }} />
                   {copiedText === "bryancha0329@gmail.com" && <span className="copied-msg">Copied!</span>}
                 </p>
                 <p className="info-item">
                   <FaPhoneAlt className="info-icon" />
                   +1 (213) 595-9929
-                  <FaRegClipboard
-                    className="copy-icon"
-                    onClick={(e) => { e.stopPropagation(); handleCopy("+1 (213) 595-9929"); }}
-                  />
+                  <FaRegClipboard className="copy-icon" onClick={(e) => { e.stopPropagation(); handleCopy("+1 (213) 595-9929"); }} />
                   {copiedText === "+1 (213) 595-9929" && <span className="copied-msg">Copied!</span>}
                 </p>
                 <p className="info-item">
                   <FaLinkedin className="info-icon" />
-                  <a href="https://www.linkedin.com/in/bryancha" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                    LinkedIn Profile
-                  </a>
+                  <a href="https://www.linkedin.com/in/bryancha" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>LinkedIn Profile</a>
                 </p>
                 <p className="info-item">
                   <FaFileAlt className="info-icon" />
-                  <a href={process.env.PUBLIC_URL + "/Bryan_Cha_Resume.pdf"} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                    View My Resume
-                  </a>
+                  <a href={process.env.PUBLIC_URL + "/Bryan_Cha_Resume.pdf"} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>View My Resume</a>
                 </p>
               </div>
             </div>
           </div>
         </div>
-
         <div className="projects-content">
           <h1 className="title">My Projects</h1>
           <hr className="divider" />
-          <div className="projects-container">
-            <div className="scroll-wrapper" ref={scrollRef}>
+          <div className="projects-container" ref={scrollRef}>
+            <div className="scroll-wrapper">
               {projects.map((project, index) => (
                 <div className="project-card" key={index} onClick={() => handleProjectClick(project.link)}>
                   <div className="project-image-wrapper">

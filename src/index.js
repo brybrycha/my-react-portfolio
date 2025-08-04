@@ -4,10 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// 1. Import the two new packages
+import { BrowserRouter } from 'react-router-dom';
+import ReactGA from 'react-ga4';
+
+// 2. Initialize Google Analytics with your ID
+const MEASUREMENT_ID = "G-TT9N3SB0Z5"; 
+ReactGA.initialize(MEASUREMENT_ID);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    {/* 3. Wrap your App component with BrowserRouter */}
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 
