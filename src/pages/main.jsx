@@ -23,6 +23,12 @@ const projects = [
     link: "https://github.com/brybrycha/Netflix-Data-ETL-Project"
   },
   {
+    title: "Data Analysis of Ultra-marathon Running ",
+    artist: "Bryan Cha",
+    image: process.env.PUBLIC_URL + "/Marathon.png",
+    link: "https://github.com/brybrycha/Data_Analysis_of_Ultra-marathon_Running"
+  },
+  {
     title: "Playlist Visualization",
     artist: "Bryan Cha & Like Lion Team",
     image: process.env.PUBLIC_URL + "/spotify.jpg",
